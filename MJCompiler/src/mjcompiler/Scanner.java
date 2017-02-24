@@ -8,7 +8,7 @@ import java.text.StringCharacterIterator;
 
 /**
  *
- * @author Bianca
+ * @author Murilo Blanco Flor
  */
 public class Scanner {
 
