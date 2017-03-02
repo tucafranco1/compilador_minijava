@@ -13,7 +13,7 @@ import java.text.StringCharacterIterator;
 public class Scanner {
 
     private static String input;
-    private StringCharacterIterator inputIt;
+    private StringCharacterIterator inputIt, InputIt;
     private SymbolTable st;
     private int lineNumber, tam = 0;
     
@@ -33,7 +33,7 @@ public class Scanner {
             input = new String(buffer);
 
             inputIt = new StringCharacterIterator(input);
-
+            
             lineNumber = 1;
         } catch (FileNotFoundException e) {
             System.err.println("Arquivo não encontrado");
@@ -300,12 +300,12 @@ public class Scanner {
             // RESERVEDS
             // ID or RESERVEDS WORDS
             if (Character.isLetter(inputIt.current())) {
+                begin = inputIt.getIndex();
                 // System.out.printf("ENTREI MANO\n");
                 int q0 = 0, q1 = 1, q2 = 2, qf = 3, estado = q1;
-                lexema = lexema + inputIt.current();
+                //              lexema = lexema + inputIt.current();
                 while (true) {
                     while (true) {
-                        // System.out.println("QUASE TIO");
                         switch (estado) {
                             case 0:
                                 inputIt.next();
@@ -315,15 +315,17 @@ public class Scanner {
                                 }
                                 break;
                             case 1:
-// lexema = new String(input.substring(begin,end));
+                                // lexema = new String(input.substring(begin,end));
                                 inputIt.next();
-                                lexema = lexema + inputIt.current();
+//                                lexema = lexema + inputIt.current();
                                 // System.out.printf("dentro do if -> %c atual: %d end: %d \n",inputIt.current(),inputIt.getIndex(), inputIt.getEndIndex());//System.out.printf("%c ",inputIt.current());
                                 if (Character.isLetter(inputIt.current()) || Character.isDigit(inputIt.current()) || inputIt.current() == '_') {
                                     estado = q2;
                                 } else {
+                                    end = inputIt.getIndex();
+                                    lexema = new String(input.substring(begin, end));
                                     tok.name = EnumToken.ID;
-                                    tok. value = lexema;
+                                    tok.value = lexema;
                                     tok.lineNumber = lineNumber;
                                     return tok;
                                 }
@@ -331,19 +333,33 @@ public class Scanner {
                                 break;
                             case 2:
                                 inputIt.next();
-                                
+
                                 if (Character.isLetter(inputIt.current()) || Character.isDigit(inputIt.current()) || inputIt.current() == '_') {
                                     estado = q2;
-                                    lexema = lexema + inputIt.current();
+                                    //lexema = lexema + inputIt.current();
                                 } else {
                                     estado = qf;
                                 }
                                 break;
                             case 3:
+                                end = inputIt.getIndex();
+                                lexema = new String(input.substring(begin, end));
                                 tok.name = EnumToken.ID;
                                 tok.value = lexema;
                                 tok.lineNumber = lineNumber;
-                                return tok;
+                                switch (lexema) {
+                                    case "boolean":
+                                        tok.name = EnumToken.BOOLEAN;
+                                        return tok;
+                                    case "class":
+                                        tok.name = EnumToken.CLASS;
+                                        return tok;
+//                                    case default:
+//                                        tok.name = EnumToken.ID;
+//                                    
+                                    
+                                }
+                                
 
                         }
 
