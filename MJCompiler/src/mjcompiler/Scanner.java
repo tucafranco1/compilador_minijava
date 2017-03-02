@@ -117,7 +117,7 @@ public class Scanner {
                     }
 
                     System.out.printf("acabou o comentário de linha %c", inputIt.current());
-                    lineNumber++;
+                   // lineNumber++;
                     // inputIt.next();
 
                 } else {
@@ -333,7 +333,7 @@ public class Scanner {
                                 break;
                             case 2:
                                 inputIt.next();
-
+                                
                                 if (Character.isLetter(inputIt.current()) || Character.isDigit(inputIt.current()) || inputIt.current() == '_') {
                                     estado = q2;
                                     //lexema = lexema + inputIt.current();
@@ -354,10 +354,30 @@ public class Scanner {
                                     case "class":
                                         tok.name = EnumToken.CLASS;
                                         return tok;
-//                                    case default:
-//                                        tok.name = EnumToken.ID;
-//                                    
-                                    
+                                    case "PUBLIC":
+                                        tok.name = EnumToken.CLASS;
+                                        return tok;
+                                    case "STATIC:
+                                        tok.name = EnumToken.CLASS;
+                                        return tok;
+                                    case "VOID":
+                                        tok.name = EnumToken.CLASS;
+                                        return tok;
+                                    case "MAIN":
+                                        tok.name = EnumToken.CLASS;
+                                        return tok;
+                                    case "IF":
+                                        tok.name = EnumToken.CLASS;
+                                        return tok;
+                                    case "WHILE":
+                                        tok.name = EnumToken.CLASS;
+                                        return tok;
+                                    case "THIS":
+                                        tok.name = EnumToken.CLASS;
+                                        return tok;
+                                    default:
+                                        tok.name = EnumToken.ID;
+                                        return tok;
                                 }
                                 
 

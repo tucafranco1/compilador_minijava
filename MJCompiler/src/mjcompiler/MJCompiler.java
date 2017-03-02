@@ -19,26 +19,30 @@
  *               | if ( Expression ) Statement else Statement
  *               | while ( Expression ) Statement
  *               | System.out.println ( Expression ) ;
- *               | ID = Expression ;
- *               | ID [ Expression ] = Expression ;
- * 8. Expression → INTEGER_LITERAL Exp'
+ *               | ID ID'
+ * 8. ID'  →  = Expression ;
+ *          | [ Expression ] = Expression ;
+ *
+ * 9. Expression → INTEGER_LITERAL Exp'
  *               | true            Exp'
  *               | false           Exp'
  *               | ID              Exp'
  *               | this            Exp'
- *               | new int [ Expression ]  Exp'
- *               | new ID ( )              Exp'
  *               | ! Expression            Exp'
  *               | ( Expression )          Exp'
+ *               | new New'
+ * 
+ * 10. New' →    int [ Expression ]  Exp'
+ *               | ID ( )            Exp'
  *
- * 9. Exp' → Op Expression Exp'
+ * 11. Exp' → Op Expression Exp'
  *               | [Expression] Exp'
  *               | . DOT
  *
- * 10. DOT → lenght Exp'
+ * 12. DOT → lenght Exp'
  *               | ID ( (Expression ( , Expression )* )? ) Exp'
  *
- * 11. Op → && | < | > | == | != | + | - | * | /
+ * 13. Op → && | < | > | == | != | + | - | * | /
  */
 
 package mjcompiler;
@@ -50,10 +54,18 @@ package mjcompiler;
 public class MJCompiler 
 {
     public static void main(String[] args) 
-    {       
+    {
+        NewJFrame j = new NewJFrame();
+        j.setVisible(true);
+        
         /*globalST = new SymbolTable<STEntry>();
         initSymbolTable();
-        */
+        
+        PARSER => colocar no botao COMPILAR
+        Parser parser = new Parser("mjcompiler.mj")
+        parser.execute();
+        
+        */ 
         Scanner scanner = new Scanner(/*globalST, */"teste1.mj"); // instanciação
         
         Token tok;
@@ -63,9 +75,8 @@ public class MJCompiler
         do
         {
             tok = scanner.nextToken();
-            // parser.scan = (scanner.nextToken());
-            //System.out.printf("Chamei ");
-            System.out.print(tok.name + " " + tok.value +"\n");
+           
+            System.out.print(tok.name + " " + "Line Number:" + tok.lineNumber + " " + tok.value +"\n");
         } while (tok.name != EnumToken.EOF);
      
     }
