@@ -355,49 +355,49 @@ public class Scanner {
                                         tok.name = EnumToken.CLASS;
                                         return tok;
                                     case "PUBLIC":
-                                        tok.name = EnumToken.CLASS;
+                                        tok.name = EnumToken.PUBLIC;
                                         return tok;
                                     case "STATIC":
-                                        tok.name = EnumToken.CLASS;
+                                        tok.name = EnumToken.STATIC;
                                         return tok;
                                     case "VOID":
-                                        tok.name = EnumToken.CLASS;
+                                        tok.name = EnumToken.VOID;
                                         return tok;
                                     case "MAIN":
-                                        tok.name = EnumToken.CLASS;
+                                        tok.name = EnumToken.MAIN;
                                         return tok;
                                     case "IF":
-                                        tok.name = EnumToken.CLASS;
+                                        tok.name = EnumToken.IF;
                                         return tok;
                                     case "WHILE":
-                                        tok.name = EnumToken.CLASS;
+                                        tok.name = EnumToken.WHILE;
                                         return tok;
                                     case "THIS":
-                                        tok.name = EnumToken.CLASS;
+                                        tok.name = EnumToken.THIS;
                                         return tok;
                                     case "INT":
-                                        tok.name = EnumToken.CLASS;
+                                        tok.name = EnumToken.INT;
                                         return tok;
                                     case "NEW":
-                                        tok.name = EnumToken.CLASS;
+                                        tok.name = EnumToken.NEW;
                                         return tok;
                                     case "EXTENDS":
-                                        tok.name = EnumToken.CLASS;
+                                        tok.name = EnumToken.EXTENDS;
                                         return tok;
                                     case "INT":
-                                        tok.name = EnumToken.CLASS;
+                                        tok.name = EnumToken.INT;
                                         return tok;
                                     case "ELSE":
-                                        tok.name = EnumToken.CLASS;
+                                        tok.name = EnumToken.ELSE;
                                         return tok;
                                     case "TRUE":
-                                        tok.name = EnumToken.CLASS;
+                                        tok.name = EnumToken.TRUE;
                                         return tok;
                                     case "FALSE":
-                                        tok.name = EnumToken.CLASS;
+                                        tok.name = EnumToken.FALSE;
                                         return tok;
                                     case "RETURN":
-                                        tok.name = EnumToken.CLASS;
+                                        tok.name = EnumToken.RETURN;
                                         return tok;
                                     default:
                                         tok.name = EnumToken.ID;
