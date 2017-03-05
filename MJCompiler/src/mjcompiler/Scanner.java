@@ -357,7 +357,7 @@ public class Scanner {
                                     case "PUBLIC":
                                         tok.name = EnumToken.CLASS;
                                         return tok;
-                                    case "STATIC:
+                                    case "STATIC":
                                         tok.name = EnumToken.CLASS;
                                         return tok;
                                     case "VOID":
@@ -373,6 +373,30 @@ public class Scanner {
                                         tok.name = EnumToken.CLASS;
                                         return tok;
                                     case "THIS":
+                                        tok.name = EnumToken.CLASS;
+                                        return tok;
+                                    case "INT":
+                                        tok.name = EnumToken.CLASS;
+                                        return tok;
+                                    case "NEW":
+                                        tok.name = EnumToken.CLASS;
+                                        return tok;
+                                    case "EXTENDS":
+                                        tok.name = EnumToken.CLASS;
+                                        return tok;
+                                    case "INT":
+                                        tok.name = EnumToken.CLASS;
+                                        return tok;
+                                    case "ELSE":
+                                        tok.name = EnumToken.CLASS;
+                                        return tok;
+                                    case "TRUE":
+                                        tok.name = EnumToken.CLASS;
+                                        return tok;
+                                    case "FALSE":
+                                        tok.name = EnumToken.CLASS;
+                                        return tok;
+                                    case "RETURN":
                                         tok.name = EnumToken.CLASS;
                                         return tok;
                                     default:
