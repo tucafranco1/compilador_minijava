@@ -284,7 +284,40 @@ public class Parser
             }
         }
     }
-    
+    private void Op() throws CompilerException
+    {
+        switch (lToken.name) {
+            case AND:
+                advance();
+                break;
+            case GT:
+                advance();            
+                break;
+            case LT:
+                advance();
+                break;
+            case EQ:
+                advance();
+                break;
+            case NE:
+                advance();
+                break;
+            case PLUS:
+                advance();
+                break;
+            case MINUS:
+                advance();
+                break;
+            case MULT:
+                advance();
+                break;
+            case DIV:
+                advance();
+                break;
+            default:
+                throw new CompilerException("Token inesperado: " + lToken.name);
+        } 
+    }
 }
  // em todos novos escopos declarar uma nova tabela de símbolos passando o pai.
 // currentST = new SymbolTable<STEntry>(currentST);
