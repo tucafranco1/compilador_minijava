@@ -347,6 +347,7 @@ public class Scanner {
                                 tok.name = EnumToken.ID;
                                 tok.value = lexema;
                                 tok.lineNumber = lineNumber;
+                                lexema = lexema.toLowerCase();
                                 switch (lexema) {
                                     case "boolean":
                                         tok.name = EnumToken.BOOLEAN;
@@ -354,51 +355,58 @@ public class Scanner {
                                     case "class":
                                         tok.name = EnumToken.CLASS;
                                         return tok;
-                                    case "PUBLIC":
+                                    case "public":
                                         tok.name = EnumToken.PUBLIC;
                                         return tok;
-                                    case "STATIC":
+                                    case "static":
                                         tok.name = EnumToken.STATIC;
                                         return tok;
-                                    case "VOID":
+                                    case "void":
                                         tok.name = EnumToken.VOID;
                                         return tok;
-                                    case "MAIN":
+                                    case "main":
                                         tok.name = EnumToken.MAIN;
                                         return tok;
-                                    case "IF":
+                                    case "if":
                                         tok.name = EnumToken.IF;
                                         return tok;
-                                    case "WHILE":
+                                    case "while":
                                         tok.name = EnumToken.WHILE;
                                         return tok;
-                                    case "THIS":
+                                    case "this":
                                         tok.name = EnumToken.THIS;
                                         return tok;
-                                    case "INT":
-                                        tok.name = EnumToken.INT;
+                                    case "else":
+                                        tok.name = EnumToken.BOOLEAN;
                                         return tok;
-                                    case "NEW":
-                                        tok.name = EnumToken.NEW;
-                                        return tok;
-                                    case "EXTENDS":
+                                    case "extends":
                                         tok.name = EnumToken.EXTENDS;
                                         return tok;
-                                    case "INT":
-                                        tok.name = EnumToken.INT;
-                                        return tok;
-                                    case "ELSE":
-                                        tok.name = EnumToken.ELSE;
-                                        return tok;
-                                    case "TRUE":
-                                        tok.name = EnumToken.TRUE;
-                                        return tok;
-                                    case "FALSE":
+                                    case "false":
                                         tok.name = EnumToken.FALSE;
                                         return tok;
-                                    case "RETURN":
+                                    case "int":
+                                        tok.name = EnumToken.INT;
+                                        return tok;
+                                    case "lenght":
+                                        tok.name = EnumToken.LENGTH;
+                                        return tok;
+                                    case "new":
+                                        tok.name = EnumToken.NEW;
+                                        return tok;
+                                    case "return":
                                         tok.name = EnumToken.RETURN;
                                         return tok;
+                                    case "string":
+                                        tok.name = EnumToken.STRING;
+                                        return tok;
+                                    case "string.out.println":
+                                        tok.name = EnumToken.SOPRINTLN;
+                                        return tok;
+                                    case "true":
+                                        tok.name = EnumToken.TRUE;
+                                        return tok;
+                                
                                     default:
                                         tok.name = EnumToken.ID;
                                         return tok;
