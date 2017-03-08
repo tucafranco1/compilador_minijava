@@ -242,19 +242,103 @@ public class Parser
 
           private void ID_() throws CompilerException
     {
-        
+        if (lToken.name == EnumToken.EQ) {
+            advance();
+            Expression();
+            match(EnumToken.SEMICOLON);
+        }
+        else if (lToken.name == EnumToken.LBRACKET) {
+            advance();
+            Expression();
+            match(EnumToken.RBRACKET);
+            match(EnumToken.EQ);
+            Expression();
+            match(EnumToken.SEMICOLON);
+        }
         
     }
 
      
       private void Expression() throws CompilerException
     {
-        
+        if (lToken.name == (EnumToken.INTEGER_LITERAL)
+                || lToken.name == (EnumToken.TRUE)
+                || lToken.name == (EnumToken.FALSE)
+                || lToken.name == (EnumToken.ID)
+                || lToken.name == (EnumToken.THIS)) {
+            advance();
+            Expression_();
+        }
+        else if(lToken.name == EnumToken.NOT){
+            advance();
+            Expression();
+            Expression_();
+        }
+        else if(lToken.name == EnumToken.LPARENTHESE){
+            advance();
+            Expression();
+            match(EnumToken.RPARENTHESE);
+            Expression_(); 
+        }
+        else if(lToken.name == EnumToken.NEW){
+            advance();
+            New_();
+        }
+        else if(lToken.name == EnumToken.LBRACKET){
+            advance();
+            Expression();
+            match(EnumToken.RBRACKET);
+            Expression_();
+        }
+        else if(lToken.name == EnumToken.DOT){
+            advance();
+            Dot();
+        }
+        else if(lToken.name == EnumToken.AND||
+                lToken.name == EnumToken.GT||
+                lToken.name == EnumToken.LT||
+                lToken.name == EnumToken.EQ|| //não seeei
+                lToken.name == EnumToken.NE||
+                lToken.name == EnumToken.PLUS||
+                lToken.name == EnumToken.MINUS||
+                lToken.name == EnumToken.MULT||
+                lToken.name == EnumToken.DIV){
+            Op();
+            Expression();
+            Expression_();
+        }
+    }
+       private void New_() throws CompilerException
+    {
+        if(lToken.name == EnumToken.INT){
+            advance();
+            match(EnumToken.LBRACKET);
+            Expression();
+            match(EnumToken.RBRACKET);
+            Expression_();
+        }
+        else if(lToken.name == EnumToken.ID){
+            advance();
+            match(EnumToken.LPARENTHESE);
+            match(EnumToken.RPARENTHESE);
+        }
         
     }
       private void Expression_() throws CompilerException
     {
-        
+        if (lToken.name == (EnumToken.INTEGER_LITERAL)||
+                    lToken.name == (EnumToken.TRUE)||
+                    lToken.name == (EnumToken.FALSE)||
+                    lToken.name == (EnumToken.ID)||
+                    lToken.name == (EnumToken.THIS)||
+                    lToken.name == (EnumToken.NOT)||
+                    lToken.name == (EnumToken.LPARENTHESE)||
+                    lToken.name == (EnumToken.NEW) ) {
+            Expression();
+            Expression_();
+        }
+        else{
+        }
         
     }
        private void Dot() throws CompilerException
@@ -263,7 +347,7 @@ public class Parser
             advance();
             Expression_();
         }
-        else if(lToken.name == (EnumToken.ID)){ //logop é '!'????
+        else if(lToken.name == (EnumToken.ID)){ //not é '!'????
             advance();
             match(EnumToken.LPARENTHESE);
             if(lToken.name == (EnumToken.INTEGER_LITERAL)||
@@ -271,7 +355,7 @@ public class Parser
                     lToken.name == (EnumToken.FALSE)||
                     lToken.name == (EnumToken.ID)||
                     lToken.name == (EnumToken.THIS)||
-                    lToken.name == (EnumToken.LOGOP)||
+                    lToken.name == (EnumToken.NOT)||
                     lToken.name == (EnumToken.LPARENTHESE)||
                     lToken.name == (EnumToken.NEW)  ){
                 Expression();
