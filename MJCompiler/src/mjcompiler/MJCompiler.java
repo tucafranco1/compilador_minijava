@@ -31,15 +31,13 @@
  *               | ! Expression            Exp'
  *               | ( Expression )          Exp'
  *               | new New'
- *               | Op Expression Exp'
+ * 
+ * 10. New' →    int [ Expression ]  Exp'
+ *               | ID ( )            Exp'
+ *
+ * 11. Exp' → Op Expression Exp'
  *               | [Expression] Exp'
  *               | . DOT
- * 
- * 10. New' →    int [ Expression ] 
- *               | ID ( )            
- *
- * 11. Exp' → Expression Exp'
- *               | epsilon
  *
  * 12. DOT → lenght Exp'
  *               | ID ( (Expression ( , Expression )* )? ) Exp'

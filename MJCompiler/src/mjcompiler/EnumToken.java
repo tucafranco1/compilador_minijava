@@ -12,21 +12,21 @@ package mjcompiler;
 public enum EnumToken 
 {
     UNDEF,
-    CLASS, //
-    PUBLIC,//
-    STATIC,//
-    VOID,//
-    MAIN,//
+    CLASS,
+    PUBLIC,
+    STATIC,
+    VOID,
+    MAIN,
     ID,
-    IF,//
-    WHILE,//
+    IF,
+    WHILE,
     SOPRINTLN,
-    THIS,//
+    THIS,
     STRING,
-    INT,//
-    BOOLEAN,//
-    NEW,//
-    EXTENDS,//
+    INT,
+    BOOLEAN,
+    NEW,
+    EXTENDS,
     LBRACKET, // colchetes
     RBRACKET,
     LPARENTHESE,
@@ -37,7 +37,7 @@ public enum EnumToken
     DOT,
     COMMA,// virgula
     SEMICOLON, /// ponto e vírgula
-    ELSE,//
+    ELSE,
     ATTRIB,  // atribuição
     NOT,
     ARITHOP, // operador aritimético
@@ -53,11 +53,11 @@ public enum EnumToken
     SEP,   // separadores
     NUMBER,
     INTEGER_LITERAL,
-    TRUE,//
-    FALSE,//
+    TRUE,
+    FALSE,
     LOGOP,
     AND,
-    RETURN,//
+    RETURN,
     LENGTH,
     EOF
 }

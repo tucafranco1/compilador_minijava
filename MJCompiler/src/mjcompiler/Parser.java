@@ -212,10 +212,13 @@ public class Parser
             case IF:
                 match(EnumToken.IF);
                 match(EnumToken.LPARENTHESE);
+                
                 Expression();
                 match(EnumToken.RPARENTHESE);
+                
                 Statement();
                 match(EnumToken.ELSE);
+                
                 Statement();
                 break;
             case WHILE:
@@ -239,25 +242,52 @@ public class Parser
                 
         }
     }
+    
+    /*
+     
+ *
+ * 9. Expression → INTEGER_LITERAL Exp'
+ *               | true            Exp'
+ *               | false           Exp'
+ *               | ID              Exp'
+ *               | this            Exp'
+ *               | ! Expression            Exp'
+ *               | ( Expression )          Exp'
+ *               | new New'
+ * 
+ * 10. New' →    int [ Expression ]  Exp'
+ *               | ID ( )            Exp'
+ *
+ * 11. Exp' → Op Expression Exp'
+ *               | [Expression] Exp'
+ *               | . DOT
+ *
+ * 12. DOT → lenght Exp'
+ *               | ID ( (Expression ( , Expression )* )? ) Exp'
+ *
+ * 13. Op → && | < | > | == | != | + | - | * | /
+    */
 
           private void ID_() throws CompilerException
     {
-        if (lToken.name == EnumToken.EQ) {
-            advance();
-            Expression();
-            match(EnumToken.SEMICOLON);
-        }
-        else if (lToken.name == EnumToken.LBRACKET) {
+        if(lToken.value == "["){
             advance();
             Expression();
             match(EnumToken.RBRACKET);
             match(EnumToken.EQ);
             Expression();
             match(EnumToken.SEMICOLON);
+        } 
+        else if(lToken.value == "=") {
+            advance();
+            Expression();
+            match(EnumToken.SEMICOLON);
         }
+        else
+            throw new CompilerException("Token inesperado: " + lToken.name);
+
         
     }
-
      
       private void Expression() throws CompilerException
     {
@@ -284,7 +314,14 @@ public class Parser
             advance();
             New_();
         }
-        else if(lToken.name == EnumToken.LBRACKET){
+        else
+            throw new CompilerException("Token inesperado: " + lToken.name);
+        
+    }
+      
+    private void Expression_() throws CompilerException {
+        
+        if(lToken.name == EnumToken.LBRACKET){
             advance();
             Expression();
             match(EnumToken.RBRACKET);
@@ -307,41 +344,30 @@ public class Parser
             Expression();
             Expression_();
         }
+        else
+            throw new CompilerException("Token inesperado: " + lToken.name);
+
+        
     }
-       private void New_() throws CompilerException
-    {
-        if(lToken.name == EnumToken.INT){
+
+    private void New_() throws CompilerException {
+
+        if (lToken.name == EnumToken.INT) {
             advance();
             match(EnumToken.LBRACKET);
             Expression();
             match(EnumToken.RBRACKET);
             Expression_();
-        }
-        else if(lToken.name == EnumToken.ID){
+        } else if (lToken.name == EnumToken.ID) {
             advance();
             match(EnumToken.LPARENTHESE);
             match(EnumToken.RPARENTHESE);
         }
-        
+        else
+            throw new CompilerException("Token inesperado: " + lToken.name);
     }
-      private void Expression_() throws CompilerException
-    {
-        if (lToken.name == (EnumToken.INTEGER_LITERAL)||
-                    lToken.name == (EnumToken.TRUE)||
-                    lToken.name == (EnumToken.FALSE)||
-                    lToken.name == (EnumToken.ID)||
-                    lToken.name == (EnumToken.THIS)||
-                    lToken.name == (EnumToken.NOT)||
-                    lToken.name == (EnumToken.LPARENTHESE)||
-                    lToken.name == (EnumToken.NEW) ) {
-            Expression();
-            Expression_();
-        }
-        else{
-        }
-        
-    }
-       private void Dot() throws CompilerException
+    
+     private void Dot() throws CompilerException
     {
         if(lToken.name == (EnumToken.LENGTH)){
             advance();
@@ -367,7 +393,10 @@ public class Parser
             Expression_();
             }
         }
+        else
+            throw new CompilerException("Token inesperado: " + lToken.name);
     }
+     
     private void Op() throws CompilerException
     {
         switch (lToken.name) {
@@ -402,10 +431,10 @@ public class Parser
                 throw new CompilerException("Token inesperado: " + lToken.name);
         } 
     }
-}
- // em todos novos escopos declarar uma nova tabela de símbolos passando o pai.
-// currentST = new SymbolTable<STEntry>(currentST);
 
+}
+// em todos novos escopos declarar uma nova tabela de símbolos passando o pai.
+// currentST = new SymbolTable<STEntry>(currentST);
 
 
 
