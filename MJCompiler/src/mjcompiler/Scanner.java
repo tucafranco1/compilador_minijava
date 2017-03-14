@@ -18,9 +18,9 @@ public class Scanner {
     private int lineNumber, tam = 0;
     
 
-    public Scanner(/*SymbolTable globalST, */String inputFileName) {
+    public Scanner(SymbolTable globalST, String inputFileName) {
         File inputFile = new File(inputFileName);
-        //st = globalST;
+        st = globalST;
 
         try {
             FileReader fr = new FileReader(inputFile);
@@ -97,7 +97,6 @@ public class Scanner {
                             if (inputIt.current() == '/') {
 
                                 inputIt.next();
-
                                 break;
                             }
 
@@ -121,7 +120,8 @@ public class Scanner {
                     // inputIt.next();
 
                 } else {
-                    // System.out.println("entrei onde devia");
+                    // System.out.pglobalST = new SymbolTable<STEntry>();
+                    //                	println("entrei onde devia");
                     tok.name = EnumToken.ARITHOP;
                     tok.attribute = EnumToken.DIV;
                     tok.value = "/";
@@ -299,10 +299,10 @@ public class Scanner {
             //void e while;
             // RESERVEDS
             // ID or RESERVEDS WORDS
-            if (Character.isLetter(inputIt.current())) {
+            if (Character.isLetter(inputIt.current())){
                 begin = inputIt.getIndex();
                 // System.out.printf("ENTREI MANO\n");
-                int q0 = 0, q1 = 1, q2 = 2, qf = 3, estado = q1;
+                int q1 = 1, q2 = 2, qf = 3, estado = q1;
                 //              lexema = lexema + inputIt.current();
                 while (true) {
                     while (true) {
@@ -347,6 +347,7 @@ public class Scanner {
                                 tok.name = EnumToken.ID;
                                 tok.value = lexema;
                                 tok.lineNumber = lineNumber;
+                                lexema = lexema.toLowerCase();
                                 switch (lexema) {
                                     case "boolean":
                                         tok.name = EnumToken.BOOLEAN;
@@ -354,27 +355,58 @@ public class Scanner {
                                     case "class":
                                         tok.name = EnumToken.CLASS;
                                         return tok;
-                                    case "PUBLIC":
-                                        tok.name = EnumToken.CLASS;
+                                    case "public":
+                                        tok.name = EnumToken.PUBLIC;
                                         return tok;
-                                    case "STATIC:
-                                        tok.name = EnumToken.CLASS;
+                                    case "static":
+                                        tok.name = EnumToken.STATIC;
                                         return tok;
-                                    case "VOID":
-                                        tok.name = EnumToken.CLASS;
+                                    case "void":
+                                        tok.name = EnumToken.VOID;
                                         return tok;
-                                    case "MAIN":
-                                        tok.name = EnumToken.CLASS;
+                                    case "main":
+                                        tok.name = EnumToken.MAIN;
                                         return tok;
-                                    case "IF":
-                                        tok.name = EnumToken.CLASS;
+                                    case "if":
+                                        tok.name = EnumToken.IF;
                                         return tok;
-                                    case "WHILE":
-                                        tok.name = EnumToken.CLASS;
+                                    case "while":
+                                        tok.name = EnumToken.WHILE;
                                         return tok;
-                                    case "THIS":
-                                        tok.name = EnumToken.CLASS;
+                                    case "this":
+                                        tok.name = EnumToken.THIS;
                                         return tok;
+                                    case "else":
+                                        tok.name = EnumToken.BOOLEAN;
+                                        return tok;
+                                    case "extends":
+                                        tok.name = EnumToken.EXTENDS;
+                                        return tok;
+                                    case "false":
+                                        tok.name = EnumToken.FALSE;
+                                        return tok;
+                                    case "int":
+                                        tok.name = EnumToken.INT;
+                                        return tok;
+                                    case "lenght":
+                                        tok.name = EnumToken.LENGTH;
+                                        return tok;
+                                    case "new":
+                                        tok.name = EnumToken.NEW;
+                                        return tok;
+                                    case "return":
+                                        tok.name = EnumToken.RETURN;
+                                        return tok;
+                                    case "string":
+                                        tok.name = EnumToken.STRING;
+                                        return tok;
+                                    case "string.out.println":
+                                        tok.name = EnumToken.SOPRINTLN;
+                                        return tok;
+                                    case "true":
+                                        tok.name = EnumToken.TRUE;
+                                        return tok;
+                                
                                     default:
                                         tok.name = EnumToken.ID;
                                         return tok;
