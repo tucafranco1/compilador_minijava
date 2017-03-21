@@ -61,7 +61,7 @@ public class MJCompiler
         
         
         //PARSER => colocar no botao COMPILAR
-        Parser parser = new Parser("mjcompiler.mj");
+        Parser parser = new Parser("teste1.mj");
         parser.execute();
         
         

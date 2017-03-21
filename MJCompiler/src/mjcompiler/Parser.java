@@ -5,6 +5,8 @@
  */
 package mjcompiler;
 
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 /**
  *
  * @author bianca
@@ -34,6 +36,20 @@ public class Parser
     	Token t = new Token(EnumToken.CLASS);
     	STEntry e = new STEntry(t, "class", true);
     	globalST.add(e);
+        t = new Token(EnumToken.PUBLIC);
+        e = new STEntry(t,"public", true);
+        t = new Token(EnumToken.STATIC);
+        e = new STEntry(t,"static", true);
+        t = new Token(EnumToken.VOID);
+        e = new STEntry(t,"void", true);
+        t = new Token(EnumToken.MAIN);
+        e = new STEntry(t,"main", true);
+        t = new Token(EnumToken.IF);
+        e = new STEntry(t,"if", true);
+        t = new Token(EnumToken.WHILE);
+        e = new STEntry(t,"while", true);
+        t = new Token(EnumToken.THIS);
+        e = new STEntry(t,"this", true);
     }
     
     
@@ -84,7 +100,7 @@ public class Parser
         
         while (lToken.name == EnumToken.CLASS) 
             classDeclaration();
-        
+
         match(EnumToken.EOF);
         
         System.out.println("\nCompilação encerrada com sucesso");
@@ -95,16 +111,16 @@ public class Parser
     
     private void mainClass() throws CompilerException
     {
-        match(EnumToken.CLASS);
-        if(lToken.name == EnumToken.ID){
-            boolean inserted = globalST.add(new STEntry(lToken, lToken.value));
-            if (!inserted){
-                System.out.printf("Classe %s já definida\n", lToken.value);
-                advance();
-            }
-            else
-                throw new CompilerException("Identificador esperado");
-        }
+//        match(EnumToken.CLASS);
+//        if(lToken.name == EnumToken.ID){
+//            boolean inserted = globalST.add(new STEntry(lToken, lToken.value));
+//            if (!inserted){
+//                System.out.printf("Classe %s já definida\n", lToken.value);
+//                advance();
+//            }
+//            else
+//                throw new CompilerException("Identificador esperado");
+//        }
         
         match(EnumToken.ID);
         match(EnumToken.LBRACE);
