@@ -234,10 +234,10 @@ public class Parser
         }
         match(EnumToken.RPARENTHESE);
         match(EnumToken.LBRACE);
-        //currentST = currentST.parent;
+        currentST = currentST.parent;
 
 
-        while(lToken.name == EnumToken.ID || lToken.name == EnumToken.INT || lToken.name == EnumToken.BOOLEAN)
+        while(lToken.name == EnumToken.INT || lToken.name == EnumToken.BOOLEAN)
         {
             varDeclaration();
         }
@@ -270,9 +270,8 @@ public class Parser
         else if(lToken.name == EnumToken.BOOLEAN || lToken.name == EnumToken.ID)
             advance();
         else
-        {            //Erro
             throw new CompilerException("Token inesperado: " + lToken.name);
-        }
+        
     }
     
     private void Statement() throws CompilerException {
@@ -354,7 +353,7 @@ public class Parser
             advance();
             Expression();
             match(EnumToken.RBRACKET);
-            match(EnumToken.EQ);
+            match(EnumToken.ATTRIB);
             Expression();
             match(EnumToken.SEMICOLON);
         } 

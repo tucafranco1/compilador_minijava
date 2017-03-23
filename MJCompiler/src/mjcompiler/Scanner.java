@@ -80,7 +80,7 @@ public class Scanner {
                 inputIt.next();
                 if (inputIt.current() == '*') {
 
-                    System.out.println("ignora comentário de página");
+                    //System.out.println("ignora comentário de página");
 
                     inputIt.next();
                     while (true) {
@@ -103,9 +103,9 @@ public class Scanner {
                         inputIt.next();
 
                     }
-                    System.out.println("acabou comentário de página");
+                    //System.out.println("acabou comentário de página");
                 } else if (inputIt.current() == '/') {
-                    System.out.println("ignora comentário de linha");
+                   // System.out.println("ignora comentário de linha");
                     inputIt.next();
 
                     while (inputIt.current() != 10 && (inputIt.getIndex() != inputIt.getEndIndex())) {
@@ -114,7 +114,7 @@ public class Scanner {
                        // System.out.printf("LOOP%c", inputIt.current());
                     }
 
-                    System.out.printf("acabou o comentário de linha %c", inputIt.current());
+                    //System.out.printf("acabou o comentário de linha %c", inputIt.current());
                    // lineNumber++;
                     // inputIt.next();
 
@@ -297,7 +297,25 @@ public class Scanner {
             //void e while;
             // RESERVEDS
             // ID or RESERVEDS WORDS
-     
+            if(inputIt.current() == 'S'){
+                begin = inputIt.getIndex();
+                while (Character.isLetter(inputIt.current()) || inputIt.current() == '.') {
+                    inputIt.next();
+                }
+                end = inputIt.getIndex();
+                lexema = new String(input.substring(begin, end));
+               // System.out.println(lexema);
+                if (lexema.equals("System.out.println")) {
+                    tok.name = EnumToken.SOPRINTLN;
+                    tok.value = lexema;
+                    tok.lineNumber = lineNumber;
+                    return tok;
+                }
+                else{
+                    inputIt.setIndex(begin);
+                }
+            }
+
             
             if (Character.isLetter(inputIt.current())){
                 begin = inputIt.getIndex();
