@@ -8,7 +8,7 @@ import java.text.StringCharacterIterator;
 
 /**
  *
- * @author Murilo Blanco Flor
+ * @author Murilo Blanco Flor and Mateus Franco Negreiros Soares
  */
 public class Scanner {
 
@@ -18,9 +18,9 @@ public class Scanner {
     private int lineNumber, tam = 0;
     
 
-    public Scanner(/*SymbolTable globalST, */String inputFileName) {
+    public Scanner(SymbolTable globalST, String inputFileName) {
         File inputFile = new File(inputFileName);
-        //st = globalST;
+        st = globalST;
 
         try {
             FileReader fr = new FileReader(inputFile);
@@ -48,7 +48,6 @@ public class Scanner {
         int begin = 0, end = 0;
 
         String lexema = "";
-        char ch = inputIt.current();
        
         while (true) {
 
@@ -97,7 +96,6 @@ public class Scanner {
                             if (inputIt.current() == '/') {
 
                                 inputIt.next();
-
                                 break;
                             }
 
@@ -121,9 +119,9 @@ public class Scanner {
                     // inputIt.next();
 
                 } else {
-                    // System.out.println("entrei onde devia");
-                    tok.name = EnumToken.ARITHOP;
-                    tok.attribute = EnumToken.DIV;
+                    // System.out.pglobalST = new SymbolTable<STEntry>();
+                    //                	println("entrei onde devia");
+                    tok.name = EnumToken.DIV;
                     tok.value = "/";
                     return tok;
                 }
@@ -137,19 +135,19 @@ public class Scanner {
 
                 switch (inputIt.current()) {
                     case '+':
-                        tok.attribute = EnumToken.PLUS;
+                        tok.name = EnumToken.PLUS;
                         tok.value = "+";
                         break;
                     case '-':
-                        tok.attribute = EnumToken.MINUS;
+                        tok.name = EnumToken.MINUS;
                         tok.value = "-";
                         break;
                     case '*':
-                        tok.attribute = EnumToken.MULT;
+                        tok.name = EnumToken.MULT;
                         tok.value = "*";
                         break;
                     case '/':
-                        tok.attribute = EnumToken.DIV;
+                        tok.name = EnumToken.DIV;
                         tok.value = "/";
                         break;
                 }
@@ -189,19 +187,19 @@ public class Scanner {
 
                 switch (inputIt.current()) {
                     case '<':
-                        tok.attribute = EnumToken.LT;
+                        tok.name = EnumToken.LT;
                         tok.value = "<";
                         inputIt.next();
                         break;
                     case '>':
-                        tok.attribute = EnumToken.GT;
+                        tok.name = EnumToken.GT;
                         tok.value = ">";                             
                         inputIt.next();
                         break;
                     case '!':
                         inputIt.next();
                         if (inputIt.current() == '=') {
-                            tok.attribute = EnumToken.NE;
+                            tok.name = EnumToken.NE;
                             tok.value = "!=";
                             inputIt.next();
                         } else {
@@ -215,7 +213,7 @@ public class Scanner {
                     case '=':
                         inputIt.next();
                         if (inputIt.current() == '=') {
-                            tok.attribute = EnumToken.EQ;
+                            tok.name = EnumToken.EQ;
                             tok.value = "==";
                             inputIt.next();
                         } else {
@@ -242,46 +240,46 @@ public class Scanner {
                 switch (inputIt.current()) {
                     case ',':
                         tok.value = ",";
-                        tok.attribute = EnumToken.COMMA;
+                        tok.name = EnumToken.COMMA;
                         inputIt.next();
                         break;
                     case '.':
-                        tok.attribute = EnumToken.DOT;
+                        tok.name = EnumToken.DOT;
                         tok.value = ".";
                         inputIt.next();
                         break;
                     case ';':
-                        tok.attribute = EnumToken.SEMICOLON;
+                        tok.name = EnumToken.SEMICOLON;
                         tok.value = ";";
                         inputIt.next();
                         break;
                     case '(':
-                        tok.attribute = EnumToken.LPARENTHESE;
+                        tok.name = EnumToken.LPARENTHESE;
                         tok.value = "(";
                         inputIt.next();
                         break;
                     case ')':
-                        tok.attribute = EnumToken.RPARENTHESE;
+                        tok.name = EnumToken.RPARENTHESE;
                         tok.value = ")";
                         inputIt.next();
                         break;
                     case '{':
-                        tok.attribute = EnumToken.LBRACE;
+                        tok.name = EnumToken.LBRACE;
                         tok.value = "{";
                         inputIt.next();
                         break;
                     case '}':
-                        tok.attribute = EnumToken.RBRACE;
+                        tok.name = EnumToken.RBRACE;
                         tok.value = "}";
                         inputIt.next();
                         break;
                     case '[':
-                        tok.attribute = EnumToken.LBRACKET;
+                        tok.name = EnumToken.LBRACKET;
                         tok.value = "[";
                         inputIt.next();
                         break;
                     case ']':
-                        tok.attribute = EnumToken.RBRACKET;
+                        tok.name = EnumToken.RBRACKET;
                         tok.value = "]";
                         inputIt.next();
                         break;
@@ -299,10 +297,12 @@ public class Scanner {
             //void e while;
             // RESERVEDS
             // ID or RESERVEDS WORDS
-            if (Character.isLetter(inputIt.current())) {
+     
+            
+            if (Character.isLetter(inputIt.current())){
                 begin = inputIt.getIndex();
                 // System.out.printf("ENTREI MANO\n");
-                int q0 = 0, q1 = 1, q2 = 2, qf = 3, estado = q1;
+                int q1 = 1, q2 = 2, qf = 3, estado = q1;
                 //              lexema = lexema + inputIt.current();
                 while (true) {
                     while (true) {
@@ -377,7 +377,7 @@ public class Scanner {
                                         tok.name = EnumToken.THIS;
                                         return tok;
                                     case "else":
-                                        tok.name = EnumToken.BOOLEAN;
+                                        tok.name = EnumToken.ELSE;
                                         return tok;
                                     case "extends":
                                         tok.name = EnumToken.EXTENDS;
@@ -400,7 +400,7 @@ public class Scanner {
                                     case "string":
                                         tok.name = EnumToken.STRING;
                                         return tok;
-                                    case "string.out.println":
+                                    case "system":
                                         tok.name = EnumToken.SOPRINTLN;
                                         return tok;
                                     case "true":
