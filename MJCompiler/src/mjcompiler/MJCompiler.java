@@ -13,7 +13,7 @@
  *
  * 5. MethodDeclaration → public Type ID ( ( Type ID ( , Type ID )∗ )? ) { ( VarDeclaration)∗ ( Statement )∗ return Expression ; }
  *
- * 6. Type → int[] | boolean | int | ID
+ * 6. Type → int[] | boolean | int | ID            
  *
  * 7. Statement → { ( Statement )∗ }
  *               | if ( Expression ) Statement else Statement
@@ -36,7 +36,7 @@
  *               | ID ( )            Exp'
  *
  * 11. Exp' → Op Expression Exp'
- *               | [Expression] Exp'
+ *               | [Expression] Exp'        
  *               | . DOT
  *
  * 12. DOT → lenght Exp'

@@ -38,18 +38,52 @@ public class Parser
     	globalST.add(e);
         t = new Token(EnumToken.PUBLIC);
         e = new STEntry(t,"public", true);
+        globalST.add(e);
         t = new Token(EnumToken.STATIC);
         e = new STEntry(t,"static", true);
+        globalST.add(e);
         t = new Token(EnumToken.VOID);
         e = new STEntry(t,"void", true);
+        globalST.add(e);
+        t = new Token(EnumToken.SOPRINTLN);
+        e = new STEntry(t,"void", true);
+        globalST.add(e);
         t = new Token(EnumToken.MAIN);
         e = new STEntry(t,"main", true);
+        globalST.add(e);
         t = new Token(EnumToken.IF);
         e = new STEntry(t,"if", true);
+        globalST.add(e);
         t = new Token(EnumToken.WHILE);
         e = new STEntry(t,"while", true);
+        globalST.add(e);
         t = new Token(EnumToken.THIS);
         e = new STEntry(t,"this", true);
+        globalST.add(e);
+        t = new Token(EnumToken.STRING);
+        e = new STEntry(t,"this", true);
+        globalST.add(e);
+        t = new Token(EnumToken.INT);
+        e = new STEntry(t,"this", true);
+        globalST.add(e);
+        t = new Token(EnumToken.BOOLEAN);
+        e = new STEntry(t,"this", true);
+        globalST.add(e);
+        t = new Token(EnumToken.NEW);
+        e = new STEntry(t,"this", true);
+        globalST.add(e);
+        t = new Token(EnumToken.EXTENDS);
+        e = new STEntry(t,"this", true);
+        globalST.add(e);
+        t = new Token(EnumToken.TRUE);
+        e = new STEntry(t,"this", true);
+        globalST.add(e);
+        t = new Token(EnumToken.FALSE);
+        e = new STEntry(t,"this", true);
+        globalST.add(e);
+        t = new Token(EnumToken.RETURN);
+        e = new STEntry(t,"this", true);
+        globalST.add(e);
     }
     
     
@@ -76,8 +110,8 @@ public class Parser
     {
         
         lToken = scan.nextToken();
-        
-        System.out.print(lToken.name + "(" + lToken.lineNumber + ")" + " " );
+  
+        System.out.print(lToken.name + "(line " + lToken.lineNumber + ")" + "\n" );
     }
     
     private void match(EnumToken cTokenName) throws CompilerException
@@ -98,9 +132,10 @@ public class Parser
     {
         mainClass();
         
-        while (lToken.name == EnumToken.CLASS) 
-            classDeclaration();
-
+        while (lToken.name == EnumToken.CLASS){
+            classDeclaration();                  
+        }
+        
         match(EnumToken.EOF);
         
         System.out.println("\nCompilação encerrada com sucesso");
@@ -111,18 +146,19 @@ public class Parser
     
     private void mainClass() throws CompilerException
     {
-//        match(EnumToken.CLASS);
-//        if(lToken.name == EnumToken.ID){
-//            boolean inserted = globalST.add(new STEntry(lToken, lToken.value));
-//            if (!inserted){
-//                System.out.printf("Classe %s já definida\n", lToken.value);
-//                advance();
-//            }
-//            else
-//                throw new CompilerException("Identificador esperado");
-//        }
+        match(EnumToken.CLASS);
         
-        match(EnumToken.ID);
+        if(lToken.name == EnumToken.ID){
+            boolean inserted = globalST.add(new STEntry(lToken, lToken.value));
+            if (!inserted){
+                System.out.printf("Classe %s já definida\n", lToken.value);
+                advance();
+            }
+            else advance();
+                
+        }
+        
+        //match(EnumToken.ID);
         match(EnumToken.LBRACE);
         match(EnumToken.PUBLIC);
         match(EnumToken.STATIC);
@@ -132,7 +168,18 @@ public class Parser
         match(EnumToken.STRING);
         match(EnumToken.LBRACKET);
         match(EnumToken.RBRACKET);
-        match(EnumToken.ID);
+        
+        if(lToken.name == EnumToken.ID){
+            boolean inserted = globalST.add(new STEntry(lToken, lToken.value));
+            if (!inserted){
+                System.out.printf("Token %s já definido\n", lToken.value);
+                advance();
+            }
+            else advance();
+                
+        }
+        
+//      match(EnumToken.ID);
         match(EnumToken.RPARENTHESE);
         match(EnumToken.LBRACE);
         Statement();
@@ -144,65 +191,124 @@ public class Parser
     
     private void classDeclaration() throws CompilerException
     {
+        currentST = new SymbolTable<STEntry>();
+        
         match(EnumToken.CLASS);
-        match(EnumToken.ID);
+        
+        if(lToken.name == EnumToken.ID){
+            boolean inserted = globalST.add(new STEntry(lToken, lToken.value));
+            if (!inserted){
+                System.out.printf("Classe %s já definida\n", lToken.value);
+                advance();
+            }
+            else advance();
+                
+        }
         if (lToken.name == EnumToken.EXTENDS)
             advance();      
+        
+        
         match(EnumToken.LBRACE); // chaves
-        
-        while(lToken.name == EnumToken.ID || lToken.name == EnumToken.INT || lToken.name == EnumToken.BOOLEAN)
-        {
+
+        while (lToken.name == EnumToken.ID || lToken.name == EnumToken.INT || lToken.name == EnumToken.BOOLEAN) {
+
             varDeclaration();
-            
-        }    
-        
-        while(lToken.name == EnumToken.PUBLIC)
-        {               
+        }
+
+        while (lToken.name == EnumToken.PUBLIC) {
             methodDeclaration();
-            
+
         }
         match(EnumToken.RBRACE);
 
-        /* 
-        currentST= new SymbolTableEntry<Entry>(currentST);
-    
-
-        */
-
-
     }
-    
-    
-    private void varDeclaration() throws CompilerException
-    {
+
+    private void varDeclaration() throws CompilerException {
         //criar tabela de simbolos
-            Type();
-            match(EnumToken.ID);
-            match(EnumToken.SEMICOLON);
+        Type();
+
+        if (lToken.name == EnumToken.ID) {          //insere na tabela 
+            boolean inserted = currentST.add(new STEntry(lToken, lToken.value));
+            if (!inserted) {
+                System.out.printf("Token %s já definido\n", lToken.value);
+                advance();
+            } else {
+                advance();
+            }
+
+        }
+
+        match(EnumToken.SEMICOLON);
     }
     
     private void methodDeclaration() throws CompilerException
     {
+        currentST = currentST.parent;
+        
         match(EnumToken.PUBLIC);
         Type();
-        match(EnumToken.ID); //inserir na tabela
+         
+        if(lToken.name == EnumToken.ID){          //insere na tabela 
+            boolean inserted = currentST.add(new STEntry(lToken, lToken.value));
+            if (!inserted){
+                System.out.printf("Método %s já definido\n", lToken.value);
+                advance();
+            }
+            else advance();
+                
+        }
+        currentST = new SymbolTable<STEntry>();
+        
         match(EnumToken.LPARENTHESE);
         if (lToken.name == EnumToken.ID || lToken.name == EnumToken.INT || lToken.name == EnumToken.BOOLEAN) {
+
+            if (lToken.name == EnumToken.ID) {          //insere na tabela 
+                boolean inserted = currentST.add(new STEntry(lToken, lToken.value));
+                if (!inserted) {
+                    System.out.printf("Método %s já definido\n", lToken.value);
+                    advance();
+                } else {
+                    advance();
+                }
+
+            }
+
             Type();
-            match(EnumToken.ID);
+
+            if (lToken.name == EnumToken.ID) {          //insere na tabela 
+                boolean inserted = currentST.add(new STEntry(lToken, lToken.value));
+                if (!inserted) {
+                    System.out.printf("Método %s já definido\n", lToken.value);
+                    advance();
+                } else {
+                    advance();
+                }
+
+            }
+
+            //match(EnumToken.ID);
             while (lToken.name == EnumToken.COMMA) {
                 match(EnumToken.COMMA);
                 Type();
-                match(EnumToken.ID);
+
+                if (lToken.name == EnumToken.ID) {          //insere na tabela 
+                    boolean inserted = currentST.add(new STEntry(lToken, lToken.value));
+                    if (!inserted) {
+                        System.out.printf("Método %s já definido\n", lToken.value);
+                        advance();
+                    } else {
+                        advance();
+                    }
+
+                }
+//                match(EnumToken.ID);
             }
         }
         match(EnumToken.RPARENTHESE);
         match(EnumToken.LBRACE);
-        //currentST = currentST.parent;
+        
 
-
-        while(lToken.name == EnumToken.ID || lToken.name == EnumToken.INT || lToken.name == EnumToken.BOOLEAN)
-        {
+        while (lToken.name == EnumToken.INT || lToken.name == EnumToken.BOOLEAN) {
             varDeclaration();
         }
         
@@ -216,6 +322,8 @@ public class Parser
         Expression();
         match(EnumToken.SEMICOLON);
         match(EnumToken.RBRACE);
+        
+        currentST = currentST.parent;
     }
     
     
@@ -231,15 +339,37 @@ public class Parser
                 }
                 
             }   
-        else if(lToken.name == EnumToken.BOOLEAN || lToken.name == EnumToken.ID)
+        else if(lToken.name == EnumToken.BOOLEAN)
             advance();
+        
+        else if (lToken.name == EnumToken.ID) {
+            boolean inserted = globalST.add(new STEntry(lToken, lToken.value));
+            if (!inserted) {
+                System.out.printf("Classe %s já definida\n", lToken.value);
+                advance();
+            } else
+                throw new CompilerException("ID não declarado anteriormente: " + lToken.name);
+
+        }
         else
-        {            //Erro
             throw new CompilerException("Token inesperado: " + lToken.name);
+        
+        
+        
+        if(lToken.name == EnumToken.ID){
+            boolean inserted = globalST.add(new STEntry(lToken, lToken.value));
+            if (!inserted){
+                System.out.printf("Classe %s já definida\n", lToken.value);
+                advance();
+            }
+            else;
+                
         }
     }
     
     private void Statement() throws CompilerException {
+        currentST = new SymbolTable<STEntry>();
+        
         switch (lToken.name) {
             case LBRACE:
                 match(EnumToken.LBRACE);
@@ -257,23 +387,27 @@ public class Parser
                 match(EnumToken.RPARENTHESE);
                 
                 Statement();
+                
                 match(EnumToken.ELSE);
                 
                 Statement();
                 break;
             case WHILE:
+                advance();
                 match(EnumToken.LPARENTHESE);
                 Expression();
                 match(EnumToken.RPARENTHESE);
                 Statement();
                 break;
             case SOPRINTLN:
+                advance();
                 match(EnumToken.LPARENTHESE);
                 Expression();
                 match(EnumToken.RPARENTHESE);
                 match(EnumToken.SEMICOLON);
                 break;
             case ID:
+                currentST.get(lToken.value); //o que faz aqui????
                 match(EnumToken.ID);
                 ID_();
                 break;
@@ -314,7 +448,7 @@ public class Parser
             advance();
             Expression();
             match(EnumToken.RBRACKET);
-            match(EnumToken.EQ);
+            match(EnumToken.ATTRIB);
             Expression();
             match(EnumToken.SEMICOLON);
         } 
@@ -385,7 +519,7 @@ public class Parser
             Expression_();
         }
         else
-            throw new CompilerException("Token inesperado: " + lToken.name);
+            ;
 
         
     }
@@ -402,6 +536,7 @@ public class Parser
             advance();
             match(EnumToken.LPARENTHESE);
             match(EnumToken.RPARENTHESE);
+            Expression_();
         }
         else
             throw new CompilerException("Token inesperado: " + lToken.name);
